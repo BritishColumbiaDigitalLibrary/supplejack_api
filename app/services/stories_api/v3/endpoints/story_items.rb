@@ -70,7 +70,14 @@ module StoriesApi
                                                                   :image_url,
                                                                   category: [],
                                                                   tags: []],
-                                                        meta: %i[align_mode is_cover caption title size metadata]).to_h
+                                                        meta: [:align_mode,
+                                                               :is_cover,
+                                                               :caption,
+                                                               :title,
+                                                               :size,
+                                                               :metadata,
+                                                               :category,
+                                                               tags: []]).to_h
         end
       end
     end

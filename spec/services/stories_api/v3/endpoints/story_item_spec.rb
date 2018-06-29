@@ -184,6 +184,20 @@ module StoriesApi
 
               expect(@story.cover_thumbnail).to be_nil
             end
+
+            it 'can add tags to metadata' do
+              item = create(:story_item, type: 'embed', sub_type: 'record', position: 1,
+                            content: { id: record.record_id},
+                            meta: { size: 1, metadata: 'Some Meta', is_cover: false, tags: ['some-tag']}).attributes.symbolize_keys
+
+              StoryItem.new(ActionController::Parameters.new(id: @story.set_items.first.id.to_s,
+                            story_id: @story.id, user_key: @user.api_key,
+                            item: item)).patch
+
+              @story.reload
+
+              expect(@story.set_items.first.meta[:tags]).to eq ['some-tag']
+            end
           end
         end
       end
