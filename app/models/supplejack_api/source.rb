@@ -29,9 +29,15 @@ module SupplejackApi
       # .where('fragments.source_id' => source_id, status: 'active')
 
 
-      # This doesn't quite work, it appears to fetch all of the records and then sample them..
 
       Record.aggregates([{ '$match': { source_id: source_id, status: 'active' }, '$sample': { size: limit } }])
+
+      Record.where('fragments.source_id' => source_id, status: 'active').aggregates([{ '$sample': { size: limit } }])
+
+
+      ## Attempted queries  Record.aggregates([ { '$match': { 'fragments.source_id' => 'nlnzcat_alma', status: 'active' }}])
+      # Record.where('fragments.source_id' => 'nlnzcat_alma', status: 'active').aggregates([ { $sample => { size: 100 }}]) =>  {"count"=>0, "sum"=>nil, "avg"=>nil, "min"=>nil, "max"=>nil}
+
 
       # records = Record.where('fragments.source_id' => source_id, :status => 'active')
       #
