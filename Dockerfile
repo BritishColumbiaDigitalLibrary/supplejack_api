@@ -2,7 +2,7 @@ FROM ruby:2.1.7
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
-
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y openjdk-7-jre
 
 WORKDIR /tmp 
